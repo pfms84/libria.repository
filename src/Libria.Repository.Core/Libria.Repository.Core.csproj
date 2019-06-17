@@ -9,10 +9,16 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <RepositoryUrl>https://github.com/pfms84/libria.repository</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/pfms84/libria.repository</PackageProjectUrl>
+    <PackageTags>repository;unit of work; uow;</PackageTags>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETCOREAPP;NETCOREAPP2_0;NETCOREAPP2_2</DefineConstants>
   </PropertyGroup>
 
+  <Target Name="Release" BeforeTargets="Clean">
+    <RemoveDir Directories=".\bin" />
+  </Target>
 </Project>
