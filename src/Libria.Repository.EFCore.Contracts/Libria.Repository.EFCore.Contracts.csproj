@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
+		<Description>Entity Framework Core Contracts of the Libria.Repository project</Description>
+		<Version>1.0.0-alpha1</Version>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<FileVersion>1.0.0.19001</FileVersion>
+		<AssemblyVersion>1.0.0</AssemblyVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
+	  <DefineConstants>TRACE;DEBUG;NETCOREAPP;NETCOREAPP2_0;NETCOREAPP2_2</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Repository\IEfCoreProcessResult.cs" />
+	  <Compile Remove="Specifications\EfCoreSpecification.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Libria.Repository.Core\Libria.Repository.Core.csproj" />
+	</ItemGroup>
+
+</Project>
