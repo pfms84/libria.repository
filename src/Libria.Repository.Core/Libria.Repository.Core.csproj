@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0;net452;net461</TargetFrameworks>
-    <Version>1.0.0-alpha1</Version>
+    <Version>1.0.0-alpha2</Version>
     <Description>Core package for the Libria.Repository project</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <FileVersion>1.0.0.19001</FileVersion>
     <AssemblyVersion>1.0.0</AssemblyVersion>
+    <RepositoryUrl>https://github.com/pfms84/libria.repository</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
