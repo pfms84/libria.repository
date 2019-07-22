@@ -1,13 +1,11 @@
-﻿namespace Libria.Repository.EFCore.Specifications
+﻿namespace Libria.Repository.NHibernate.Specifications
 {
 	using System;
-	using System.Collections.Generic;
 	using System.Linq;
 	using System.Linq.Expressions;
 	using Core.Specification;
-	using Microsoft.EntityFrameworkCore;
 
-	public class EfCoreSpecificationVisitor<T> : SpecificationVisitor<T> where T : class
+	public class NHibernateSpecificationVisitor<T> : SpecificationVisitor<T> where T : class
 	{
 		private VisitorContext _context = new VisitorContext(null, null, null);
 

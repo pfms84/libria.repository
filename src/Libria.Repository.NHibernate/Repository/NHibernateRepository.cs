@@ -1,4 +1,4 @@
-﻿namespace Libria.Repository.EFCore.Repository
+﻿namespace Libria.Repository.NHibernate.Repository
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,23 +10,23 @@
 	using Contracts;
 	using Core;
 	using Core.Specification;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.ChangeTracking;
+	using global::NHibernate;
+	using global::NHibernate.Event.Default;
+	using global::NHibernate.Linq;
 	using Specifications;
 
-	public abstract class EfCoreRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class
+	public class NHibernateRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class
 	{
-		protected readonly DbContext DbContext;
-		protected readonly DbSet<TEntity> DbSet;
+		protected readonly ISession Session;
 
-		protected EfCoreRepository(IEfCoreUnitOfWork unitOfWork)
+		protected IQueryable<TEntity> Query => Session.Query<TEntity>();
+
+		public NHibernateRepository(INHibernateUnitOfWork unitOfWork)
 		{
-			DbContext = unitOfWork.DbContext;
-			
-			DbSet = DbContext.Set<TEntity>();
+			Session = unitOfWork.Session;
 		}
-
-		public Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default(CancellationToken) )
+		
+		public Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
 
@@ -105,39 +105,21 @@
 
 		public TEntity GetById(TKey id)
 		{
-			var entity = GetBaseQuery(DbSet)
-				.SingleOrDefault(GetByIdExpression(id));
+			var entity = Session.Get<TEntity>(id);
 			
 			return entity;
 		}
 
 		public TEntity Add(TEntity entity)
 		{
-			var entry = GetEntityEntry(entity);
-
-			if (entry.State == EntityState.Detached)
-			{
-				DbSet.Add(entity);
-			}
-
-			entry.State = EntityState.Added;
-
-			return entry.Entity;
+			Session.Save(entity);
+			return entity;
 		}
 
 		public TEntity Update(TEntity entity)
 		{
-			var entry = GetEntityEntry(entity);
-
-			if (entry.State == EntityState.Detached)
-			{
-				DbSet.Update(entity);
-			}
-
-			if (entry.State != EntityState.Added && entry.State != EntityState.Deleted)
-				entry.State = EntityState.Modified;
-
-			return entry.Entity;
+			Session.Update(entity);
+			return entity;
 		}
 
 		public void AddRange(IEnumerable<TEntity> entities)
@@ -152,20 +134,7 @@
 
 		public TEntity Remove(TEntity entity)
 		{
-			var entry = GetEntityEntry(entity);
-
-			if (entry.State == EntityState.Detached)
-			{
-				DbSet.Attach(entity);
-				DbSet.Remove(entity);
-				return entry.Entity;
-			}
-
-			if (entry.State != EntityState.Deleted)
-			{
-				entry.State = EntityState.Deleted;
-				return entry.Entity;
-			}
+			Session.Delete(entity);
 
 			return entity;
 		}
@@ -206,37 +175,11 @@
 
 		protected virtual IQueryable<TEntity> GetQueryFromSpecification(ISpecification<TEntity> specification)
 		{
-			var visitor = new EfCoreSpecificationVisitor<TEntity>();
+			var visitor = new NHibernateSpecificationVisitor<TEntity>();
 			specification.Accept(visitor);
 
-			var query = visitor.BuildQuery(GetBaseQuery(DbSet));
+			var query = visitor.BuildQuery(Query);
 			return query;
-		}
-
-		protected virtual IQueryable<TEntity> GetBaseQuery(DbSet<TEntity> set)
-		{
-			return set;
-		}
-		
-		private EntityEntry<TEntity> GetEntityEntry(TEntity entity)
-		{
-			var entry = DbContext.Entry(entity);
-
-			return entry;
-		}
-
-		protected Expression<Func<TEntity, bool>> GetByIdExpression(TKey id)
-		{
-			var metadata = DbContext.Model.FindEntityType(typeof(TEntity));
-			var primaryKey = metadata.FindPrimaryKey();
-			var keyProperty = primaryKey.Properties.Single();
-
-			var paramExpression = Expression.Parameter(typeof(TEntity), "entity");
-			var constantExpression = Expression.Constant(id, id.GetType());
-			var memberExpression = Expression.Property(paramExpression, keyProperty.PropertyInfo.Name);
-			var equalExpression = Expression.Equal(memberExpression, constantExpression);
-
-			return Expression.Lambda<Func<TEntity, bool>>(equalExpression, paramExpression);
 		}
 	}
 }

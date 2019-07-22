@@ -1,51 +1,41 @@
-﻿namespace Libria.Repository.EFCore.UnitOfWork
+﻿namespace Libria.Repository.NHibernate.UnitOfWork
 {
 	using System;
 	using System.Data;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using Contracts;
-	using Core;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Storage;
+	using global::NHibernate;
 
-	public class EfCoreUnitOfWork : IEfCoreUnitOfWork
+	public class NHibernateUnitOfWork: INHibernateUnitOfWork
 	{
 		private readonly IsolationLevel _isolationLevel;
-		private IDbContextTransaction _transaction;
+		private ITransaction _transaction;
 
-		public DbContext DbContext { get; private set; }
-
-		public EfCoreUnitOfWork(
-			DbContext dbContext,
+		public NHibernateUnitOfWork(ISession session,
 			IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
 		{
-			DbContext = dbContext;
+			Session = session;
 			_isolationLevel = isolationLevel;
 		}
 
 		public async Task RollbackAsync(CancellationToken ct = default(CancellationToken))
 		{
-			_transaction.Rollback();
+			await _transaction.RollbackAsync(ct);
 			_transaction.Dispose();
 			_transaction = null;
-			await Task.CompletedTask;
 		}
 
-		public async Task BeginTransactionAsync(CancellationToken ct = default(CancellationToken))
+		public Task BeginTransactionAsync(CancellationToken ct = default(CancellationToken))
 		{
-			if (_transaction != null)
-			{
-				throw new Exception();
-			}
-
-			_transaction = await DbContext.Database.BeginTransactionAsync(_isolationLevel, ct);
+			ct.ThrowIfCancellationRequested();
+			BeginTransaction();
+			return Task.CompletedTask;
 		}
 
 		public async Task CommitAsync(CancellationToken ct = default(CancellationToken))
 		{
-			await DbContext.SaveChangesAsync(ct);
-			_transaction.Commit();
+			await _transaction.CommitAsync(ct);
 			_transaction.Dispose();
 			_transaction = null;
 		}
@@ -64,12 +54,11 @@
 				throw new Exception();
 			}
 
-			_transaction = DbContext.Database.BeginTransaction(_isolationLevel);
+			_transaction = Session.BeginTransaction(_isolationLevel);
 		}
 
 		public void Commit()
 		{
-			DbContext.SaveChanges();
 			_transaction.Commit();
 			_transaction.Dispose();
 			_transaction = null;
@@ -85,11 +74,13 @@
 		{
 			if (disposing)
 			{
-				DbContext?.Dispose();
+				Session?.Dispose();
 				_transaction?.Dispose();
-				DbContext = null;
+				Session = null;
 				_transaction = null;
 			}
 		}
+
+		public ISession Session { get; private set; }
 	}
 }

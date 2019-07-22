@@ -5,9 +5,33 @@
 	using System.Threading.Tasks;
 	using Specification;
 
-	public interface IRepository<TEntity> where TEntity : class
+	public interface IRepository<TEntity, in TKey> where TEntity : class
 	{
-		TEntity GetById(params object[] keyValues);
+		Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken));
+
+		Task AddRangeAsync(IEnumerable<TEntity> entities,
+			CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<TEntity> RemoveAsync(TEntity entity,
+			CancellationToken cancellationToken = default(CancellationToken));
+
+		Task RemoveRangeAsync(IEnumerable<TEntity> entities,
+			CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<int> CountAsync(ISpecification<TEntity> specification,
+			CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<TEntity> FindAsync(ISpecification<TEntity> specification,
+			CancellationToken cancellationToken = default(CancellationToken));
+
+		Task<IEnumerable<TEntity>> FindAllAsync(ISpecification<TEntity> specification,
+			CancellationToken cancellationToken = default(CancellationToken));
+
+		TEntity GetById(TKey id);
 
 		TEntity Add(TEntity entity);
 
@@ -24,23 +48,5 @@
 		TEntity Find(ISpecification<TEntity> specification);
 
 		IEnumerable<TEntity> FindAll(ISpecification<TEntity> specification);
-	}
-
-	public interface IRepository<TEntity, in TKey1>
-		: IRepository<TEntity> where TEntity : class
-	{
-		TEntity GetById(TKey1 keyValue1);
-	}
-
-	public interface IRepository<TEntity, in TKey1, in TKey2>
-		: IRepository<TEntity> where TEntity : class
-	{
-		TEntity GetById(TKey1 keyValue1, TKey2 keyValue2);
-	}
-
-	public interface IRepository<TEntity, in TKey1, in TKey2, in TKey3>
-		: IRepository<TEntity> where TEntity : class
-	{
-		TEntity GetById(TKey1 keyValue1, TKey2 keyValue2, TKey3 keyValue3);
 	}
 }
