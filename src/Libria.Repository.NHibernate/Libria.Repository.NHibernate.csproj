@@ -1,7 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Description>NHibernate implementation of the Libria.Repository project</Description>
+    <PackageProjectUrl>https://github.com/pfms84/libria.repository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pfms84/libria.repository</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>repository;unit of work; uow;</PackageTags>
+    <Version>1.0.0-alpha3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp2.0;net452;net461</TargetFrameworks>
-		<Version>1.0.0-alpha2</Version>
+		<Version>1.0.0-alpha3</Version>
 		<Description>Extensions for the Libria.Repository.Core package</Description>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<FileVersion>1.0.0.19001</FileVersion>
