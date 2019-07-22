@@ -3,16 +3,16 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
     <Description>Entity Framework Core implementation of the Libria.Repository project</Description>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <FileVersion>1.0.1.19001</FileVersion>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.2.19001</FileVersion>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
     <RepositoryUrl>https://github.com/pfms84/libria.repository</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/pfms84/libria.repository</PackageProjectUrl>
     <PackageTags>repository;unit of work; uow;</PackageTags>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.1-alpha5</Version>
+    <Version>1.0.0-alpha6</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">

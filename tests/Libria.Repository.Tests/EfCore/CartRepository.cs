@@ -3,13 +3,13 @@
 	using System;
 	using System.Linq;
 	using EFCore.Contracts;
-	using EFCore.Repository;
 	using Microsoft.EntityFrameworkCore;
 	using Models;
 
-	public class CartRepository : EfCoreRepository<Cart, Guid>
+
+	public class CartRepository : BaseTestRepository<Cart, Guid>
 	{
-		public CartRepository(IEfCoreUnitOfWork unitOfWork) : base(unitOfWork)
+		public CartRepository(IEfCoreUnitOfWork<TestDbContext> unitOfWork) : base(unitOfWork)
 		{
 		}
 

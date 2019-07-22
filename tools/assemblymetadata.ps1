@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 $major = 1
 $minor = 0
-$patch = 1
+$patch = 2
 
 $assemblyVersion = "$($major).$($minor).$($patch)" 
 $assemblyFileVersion = "$($major).$($minor).$($patch).19001"

@@ -7,12 +7,13 @@
 	using Contracts;
 	using global::NHibernate;
 
-	public class NHibernateUnitOfWork: INHibernateUnitOfWork
+	public class NHibernateUnitOfWork<TSession>: INHibernateUnitOfWork<TSession> 
+		where TSession : ISession
 	{
 		private readonly IsolationLevel _isolationLevel;
 		private ITransaction _transaction;
 
-		public NHibernateUnitOfWork(ISession session,
+		public NHibernateUnitOfWork(TSession session,
 			IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
 		{
 			Session = session;
@@ -76,11 +77,11 @@
 			{
 				Session?.Dispose();
 				_transaction?.Dispose();
-				Session = null;
+				Session = default(TSession);
 				_transaction = null;
 			}
 		}
 
-		public ISession Session { get; private set; }
+		public TSession Session { get; private set; }
 	}
 }

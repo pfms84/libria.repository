@@ -7,9 +7,9 @@
     <RepositoryUrl>https://github.com/pfms84/libria.repository</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>repository;unit of work; uow;</PackageTags>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1-alpha5</Version>
+    <Version>1.0.0-alpha6</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -24,4 +24,7 @@
     <ProjectReference Include="..\Libria.Repository.Core\Libria.Repository.Core.csproj" />
   </ItemGroup>
 
+  <Target Name="Release" BeforeTargets="Clean">
+    <RemoveDir Directories=".\bin" />
+  </Target>
 </Project>

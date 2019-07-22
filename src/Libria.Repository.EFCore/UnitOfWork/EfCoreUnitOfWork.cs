@@ -9,15 +9,16 @@
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore.Storage;
 
-	public class EfCoreUnitOfWork : IEfCoreUnitOfWork
+	public class EfCoreUnitOfWork<TDbContext> : IEfCoreUnitOfWork<TDbContext> 
+		where TDbContext : DbContext
 	{
 		private readonly IsolationLevel _isolationLevel;
 		private IDbContextTransaction _transaction;
 
-		public DbContext DbContext { get; private set; }
+		public TDbContext DbContext { get; private set; }
 
 		public EfCoreUnitOfWork(
-			DbContext dbContext,
+			TDbContext dbContext,
 			IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
 		{
 			DbContext = dbContext;

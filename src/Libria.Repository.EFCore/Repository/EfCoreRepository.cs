@@ -14,14 +14,15 @@
 	using Microsoft.EntityFrameworkCore.ChangeTracking;
 	using Specifications;
 
-	public abstract class EfCoreRepository<TEntity, TKey> : 
+	public class EfCoreRepository<TEntity, TKey, TDbContext> : 
 		IRepository<TEntity, TKey>,
 		IAsyncRepository<TEntity, TKey> where TEntity : class
+		where TDbContext : DbContext
 	{
 		protected readonly DbContext DbContext;
 		protected readonly DbSet<TEntity> DbSet;
 
-		protected EfCoreRepository(IEfCoreUnitOfWork unitOfWork)
+		public EfCoreRepository(IEfCoreUnitOfWork<TDbContext> unitOfWork)
 		{
 			DbContext = unitOfWork.DbContext;
 			

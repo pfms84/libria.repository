@@ -3,8 +3,9 @@
 	using Core;
 	using Microsoft.EntityFrameworkCore;
 
-	public interface IEfCoreUnitOfWork: IUnitOfWork
+	public interface IEfCoreUnitOfWork<out TDbContext>: IUnitOfWork
+		where TDbContext : DbContext
 	{
-		DbContext DbContext { get; }
+		TDbContext DbContext { get; }
 	}
 }

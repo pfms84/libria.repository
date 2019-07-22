@@ -70,7 +70,7 @@
 		}	
 	}
 
-	public class TestNHibernateUnitOfWork : NHibernateUnitOfWork
+	public class TestNHibernateUnitOfWork : NHibernateUnitOfWork<ISession>
 	{
 		class ExtendedMsSql2012Dialect : MsSql2012Dialect
 		{

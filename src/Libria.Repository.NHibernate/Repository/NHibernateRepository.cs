@@ -14,16 +14,18 @@
 	using global::NHibernate.Event.Default;
 	using global::NHibernate.Linq;
 	using Specifications;
+	using UnitOfWork;
 
-	public class NHibernateRepository<TEntity, TKey> : 
+	public class NHibernateRepository<TEntity, TKey, TSession> : 
 		IRepository<TEntity, TKey>, 
 		IAsyncRepository<TEntity, TKey> where TEntity : class
+		where TSession : ISession
 	{
-		protected readonly ISession Session;
+		protected readonly TSession Session;
 
 		protected IQueryable<TEntity> Query => Session.Query<TEntity>();
 
-		public NHibernateRepository(INHibernateUnitOfWork unitOfWork)
+		public NHibernateRepository(INHibernateUnitOfWork<TSession> unitOfWork)
 		{
 			Session = unitOfWork.Session;
 		}

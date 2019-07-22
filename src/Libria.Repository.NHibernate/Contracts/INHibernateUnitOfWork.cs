@@ -3,8 +3,9 @@
 	using Core;
 	using global::NHibernate;
 
-	public interface INHibernateUnitOfWork: IUnitOfWork
+	public interface INHibernateUnitOfWork<out TSession>: IUnitOfWork
+		where TSession: ISession
 	{
-		ISession Session { get; }
+		TSession Session { get; }
 	}
 }

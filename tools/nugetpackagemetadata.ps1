@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 $major = 1
 $minor = 0
-$patch = '0-alpha4'
+$patch = '0-alpha6'
 
 $packageVersion = "$($major).$($minor).$($patch)";
 

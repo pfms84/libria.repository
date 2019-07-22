@@ -4,9 +4,9 @@
 	using EFCore.Repository;
 	using Models;
 
-	public class ProductRepository : EfCoreRepository<Product, int>
+	public class ProductRepository : BaseTestRepository<Product, int>
 	{
-		public ProductRepository(IEfCoreUnitOfWork unitOfWork) : base(unitOfWork)
+		public ProductRepository(IEfCoreUnitOfWork<TestDbContext> unitOfWork) : base(unitOfWork)
 		{
 		}
 	}
