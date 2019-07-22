@@ -15,7 +15,9 @@
 	using global::NHibernate.Linq;
 	using Specifications;
 
-	public class NHibernateRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class
+	public class NHibernateRepository<TEntity, TKey> : 
+		IRepository<TEntity, TKey>, 
+		IAsyncRepository<TEntity, TKey> where TEntity : class
 	{
 		protected readonly ISession Session;
 

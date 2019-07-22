@@ -1,4 +1,4 @@
-﻿namespace Libria.Repository.Tests.Models
+﻿namespace Libria.Repository.Tests.EfCore.Models
 {
 	using System.Collections.Generic;
 	using Seedwork;

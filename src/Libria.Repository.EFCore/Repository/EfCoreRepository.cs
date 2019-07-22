@@ -14,7 +14,9 @@
 	using Microsoft.EntityFrameworkCore.ChangeTracking;
 	using Specifications;
 
-	public abstract class EfCoreRepository<TEntity, TKey> : IRepository<TEntity, TKey> where TEntity : class
+	public abstract class EfCoreRepository<TEntity, TKey> : 
+		IRepository<TEntity, TKey>,
+		IAsyncRepository<TEntity, TKey> where TEntity : class
 	{
 		protected readonly DbContext DbContext;
 		protected readonly DbSet<TEntity> DbSet;

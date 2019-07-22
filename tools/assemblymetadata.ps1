@@ -2,11 +2,11 @@ $ErrorActionPreference = "Stop"
 
 $major = 1
 $minor = 0
-$patch = 0
+$patch = 1
 
-$assemblyVersion = "$($major).0.0" 
+$assemblyVersion = "$($major).$($minor).$($patch)" 
 $assemblyFileVersion = "$($major).$($minor).$($patch).19001"
-$assemblyInformationalVersion = "$($major).$($minor).$($patch)-rc1"
+$assemblyInformationalVersion = "$($major).$($minor).$($patch)"
 
 Write-Host "Updating project versions..."
 

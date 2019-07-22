@@ -1,7 +1,7 @@
 Write-Host "Publishing nuget packages to local repo..."
 
 Get-ChildItem -Path ".." -Recurse | 
-Where-Object {$_.FullName -like "*src*" -and $_.FullName -like "*bin\Release*" -and $_.Name -like "*.nupkg"} | 
+Where-Object {$_.FullName -like "*src*" -and $_.FullName -like "*bin\Debug*" -and $_.Name -like "*.nupkg"} | 
 ForEach-Object {
 	$packageName = $_.FullName
 

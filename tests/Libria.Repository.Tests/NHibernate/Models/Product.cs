@@ -1,4 +1,4 @@
-﻿namespace Libria.Repository.Tests.Models
+﻿namespace Libria.Repository.Tests.NHibernate.Models
 {
 	using Seedwork;
 

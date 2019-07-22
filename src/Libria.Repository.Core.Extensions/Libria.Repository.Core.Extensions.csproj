@@ -2,16 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netcoreapp2.0;net452;net461</TargetFrameworks>
-		<Version>1.0.0-alpha3</Version>
+		<VersionPrefix>1.0.1</VersionPrefix>
 		<Description>Extensions for the Libria.Repository.Core package</Description>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<FileVersion>1.0.0.19001</FileVersion>
-		<AssemblyVersion>1.0.0</AssemblyVersion>
+		<FileVersion>1.0.1.19001</FileVersion>
+		<AssemblyVersion>1.0.1</AssemblyVersion>
 		<RepositoryUrl>https://github.com/pfms84/libria.repository</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/pfms84/libria.repository</PackageProjectUrl>
     <PackageTags>repository;unit of work; uow;</PackageTags>
     <RepositoryType>git</RepositoryType>
+    <Version>1.0.1-alpha5</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
