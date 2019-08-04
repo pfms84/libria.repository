@@ -29,21 +29,21 @@
 			DbSet = DbContext.Set<TEntity>();
 		}
 
-		public Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default(CancellationToken) )
+		public virtual Task<TEntity> GetByIdAsync(TKey id, CancellationToken cancellationToken = default(CancellationToken) )
 		{
 			cancellationToken.ThrowIfCancellationRequested();
 
 			return Task.FromResult(GetById(id));
 		}
 
-		public Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
+		public virtual Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
 
 			return Task.FromResult(Add(entity));
 		}
 
-		public Task<TEntity> UpdateAsync(TEntity entity,
+		public virtual Task<TEntity> UpdateAsync(TEntity entity,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
@@ -51,7 +51,7 @@
 			return Task.FromResult(Update(entity));
 		}
 
-		public Task AddRangeAsync(IEnumerable<TEntity> entities,
+		public virtual Task AddRangeAsync(IEnumerable<TEntity> entities,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
@@ -61,7 +61,7 @@
 			return Task.CompletedTask;
 		}
 
-		public Task<TEntity> RemoveAsync(TEntity entity,
+		public virtual Task<TEntity> RemoveAsync(TEntity entity,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
@@ -69,7 +69,7 @@
 			return Task.FromResult(Remove(entity));
 		}
 
-		public Task RemoveRangeAsync(IEnumerable<TEntity> entities,
+		public virtual Task RemoveRangeAsync(IEnumerable<TEntity> entities,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			cancellationToken.ThrowIfCancellationRequested();
@@ -79,7 +79,7 @@
 			return Task.CompletedTask;
 		}
 
-		public async Task<int> CountAsync(ISpecification<TEntity> specification,
+		public virtual async Task<int> CountAsync(ISpecification<TEntity> specification,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var query = GetQueryFromSpecification(specification);
@@ -88,7 +88,7 @@
 				.CountAsync(cancellationToken);
 		}
 
-		public async Task<TEntity> FindAsync(ISpecification<TEntity> specification,
+		public virtual async Task<TEntity> FindAsync(ISpecification<TEntity> specification,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var query = GetQueryFromSpecification(specification);
@@ -97,7 +97,7 @@
 				.FirstOrDefaultAsync(cancellationToken);
 		}
 
-		public async Task<IEnumerable<TEntity>> FindAllAsync(ISpecification<TEntity> specification,
+		public virtual async Task<IEnumerable<TEntity>> FindAllAsync(ISpecification<TEntity> specification,
 			CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var query = GetQueryFromSpecification(specification);
@@ -106,7 +106,7 @@
 				.ToListAsync(cancellationToken);
 		}
 
-		public TEntity GetById(TKey id)
+		public virtual TEntity GetById(TKey id)
 		{
 			var entity = GetBaseQuery(DbSet)
 				.SingleOrDefault(GetByIdExpression(id));
@@ -114,7 +114,7 @@
 			return entity;
 		}
 
-		public TEntity Add(TEntity entity)
+		public virtual TEntity Add(TEntity entity)
 		{
 			var entry = GetEntityEntry(entity);
 
@@ -128,7 +128,7 @@
 			return entry.Entity;
 		}
 
-		public TEntity Update(TEntity entity)
+		public virtual TEntity Update(TEntity entity)
 		{
 			var entry = GetEntityEntry(entity);
 
@@ -143,7 +143,7 @@
 			return entry.Entity;
 		}
 
-		public void AddRange(IEnumerable<TEntity> entities)
+		public virtual void AddRange(IEnumerable<TEntity> entities)
 		{
 			var entitiesArray = entities as TEntity[] ?? entities.ToArray();
 
@@ -153,7 +153,7 @@
 			}
 		}
 
-		public TEntity Remove(TEntity entity)
+		public virtual TEntity Remove(TEntity entity)
 		{
 			var entry = GetEntityEntry(entity);
 
@@ -173,7 +173,7 @@
 			return entity;
 		}
 
-		public void RemoveRange(IEnumerable<TEntity> entities)
+		public virtual void RemoveRange(IEnumerable<TEntity> entities)
 		{
 			var entitiesArray = entities as TEntity[] ?? entities.ToArray();
 
@@ -183,7 +183,7 @@
 			}
 		}
 
-		public int Count(ISpecification<TEntity> specification)
+		public virtual int Count(ISpecification<TEntity> specification)
 		{
 			var query = GetQueryFromSpecification(specification);
 
@@ -191,7 +191,7 @@
 				.Count();
 		}
 
-		public TEntity Find(ISpecification<TEntity> specification)
+		public virtual TEntity Find(ISpecification<TEntity> specification)
 		{
 			var query = GetQueryFromSpecification(specification);
 
@@ -199,7 +199,7 @@
 				.FirstOrDefault();
 		}
 
-		public IEnumerable<TEntity> FindAll(ISpecification<TEntity> specification)
+		public virtual IEnumerable<TEntity> FindAll(ISpecification<TEntity> specification)
 		{
 			var query = GetQueryFromSpecification(specification);
 
