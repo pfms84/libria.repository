@@ -10,8 +10,5 @@ Useful core extensions.
 ## Libria.Repository.EFCore
 Entity Framework Core implementation.
 
-## Libria.Repository.EFCore.Contracts
-Base Entity Framework Core Contracts.
-
-## Libria.Repository.Http
-Http client implementation.
+## Libria.Repository.NHibernate
+NHibernate implementation.
